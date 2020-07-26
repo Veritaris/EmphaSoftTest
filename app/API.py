@@ -69,20 +69,21 @@ def login_to_vk():
 def get_code():
     req = url_decode(request.url)
 
-    # if "code" not in req.keys():
-    #     return jsonify({"error": req.get("error"), "error_description": req.get("error_description")}), 400
-
-    code = req.get("code")
-    r = post(
-        url=token_url,
-        data={
-            "client_id": app.config["CLIENT_ID"],
-            "client_secret": app.config["APP_SECRET_KEY"],
-            "redirect_url": "https://167.71.58.132/est/getToken",
-            "code": code
-        }
-    )
-    return request.url, 200
+    if "code" in req.keys():
+        code = req.get("code")
+        r = post(
+            url=token_url,
+            data={
+                "client_id": app.config["CLIENT_ID"],
+                "client_secret": app.config["APP_SECRET_KEY"],
+                "redirect_uri": "https://167.71.58.132/est/getCode",
+                "code": code
+            }
+        )
+        return request.url, 200
+    else:
+        return request.url, 200
+    # return jsonify({"error": req.get("error"), "error_description": req.get("error_description")}), 400
 
 
 def get_token():
