@@ -15,19 +15,19 @@ if not os.path.exists(log_dir):
 handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
-    '%(levelname) %(asctime)s -- %(message)s'
+    '%(levelname)-8s %(asctime)s -- %(message)s'
 ))
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
 
-# logging.basicConfig(
-#     filename=f"{log_dir}/app.log",
-#     filemode="w",
-#     format="%(name)s - %(levelname)s - %(message)s",
-#     level=logging.INFO
-# )
+logging.basicConfig(
+    filename=f"{log_dir}/app.log",
+    filemode="w",
+    format="%(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
