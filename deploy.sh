@@ -1,4 +1,3 @@
-cd ~/$1
 git pull --force
 
 if ! cmp requirements.txt requirements.super.txt >/dev/null 2>&1
