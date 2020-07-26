@@ -1,11 +1,10 @@
-from logging.handlers import RotatingFileHandler
-
 from flask import render_template, request, jsonify
+from logging.handlers import RotatingFileHandler
+from werkzeug.urls import url_decode
+from requests import post
 from app import app
-import requests
 import logging
 import os
-
 parent_dir = "/".join(os.path.realpath(__file__).split("/")[:-1])
 log_dir = os.path.join(parent_dir, "logs")
 
@@ -22,7 +21,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
 
-
+token_url = "https://oauth.vk.com/access_token"
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
@@ -50,27 +49,45 @@ def main_page():
 
 
 def login_to_vk():
-    r = requests.post(
+    r = post(
         url=oauth_url,
         data={
             "client_id": app.config.get("CLIENT_ID"),
             "display": "page",
-            "redirect_uri": "https://167.71.58.132/est/access",
+            "redirect_uri": "https://167.71.58.132/est/getCode",
             "scope": 2,
             "response_type": "code",
             "v": 5.120
         }
     )
+
     log_action()
     return r.content
 
 
-def is_logged():
-    log_action()
-    return "ok"
+def get_code():
+    req = url_decode(request.url)
+    code = req.get("code")
+
+    if not code:
+        return jsonify({"error": req.get("error"), "error_description":req.get("error_description")}), 400
+
+    r = post(
+        url=token_url,
+        data={
+            "client_id": app.config["CLIENT_ID"],
+            "client_secret": app.config["APP_SECRET_KEY"],
+            "redirect_url": "https://167.71.58.132/est/getToken",
+            "code": code
+        }
+    )
+    return request.url, 200
 
 
-def get_access():
-    r = request
-    log_action()
-    return "r.path"
+def get_token():
+    req = url_decode(request.url)
+
+    if "error" in req:
+        return jsonify({"error": req.get("error"), "error_description": req.get("error_description")}), 400
+
+    return request.url, 200
