@@ -15,7 +15,7 @@ if not os.path.exists(log_dir):
 handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
-    '%(levelname)-8s %(asctime)s -- %(message)s'
+    '[%(asctime)s] -- %(message)s'
 ))
 
 logger = logging.getLogger()
