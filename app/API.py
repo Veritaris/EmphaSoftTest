@@ -33,7 +33,7 @@ vk_api_url = "https://api.vk.com/method/"
 
 
 def main_page():
-    logger.info(f"{request.method} {request.headers} {request.url_root}/{request.url}")
+    logger.info(f"{request.method} {request.headers.get('User-Agent')} {request.cookies} {request.url}")
     return render_template("index.html")
 
 
@@ -49,18 +49,16 @@ def login_to_vk():
             "v": 5.120
         }
     )
-    # logger.info(str(r.content))
-    # logger.info(str(r.cookies))
-    logger.info(f"{request.method} {request.headers} {request.url_root}/{request.url}")
+    logger.info(f"{request.method} {request.headers.get('User-Agent')} {request.cookies} {request.url}")
     return r.content
 
 
 def is_logged():
-    logger.info(f"{request.method} {request.headers} {request.url_root}/{request.url}")
+    logger.info(f"{request.method} {request.headers.get('User-Agent')} {request.cookies} {request.url}")
     return "ok"
 
 
 def get_access():
     r = request
-    logger.info(f"{request.method} {request.headers} {request.url_root}/{request.url}")
+    logger.info(f"{request.method} {request.headers.get('User-Agent')} {request.cookies} {request.url}")
     return "r.path"
