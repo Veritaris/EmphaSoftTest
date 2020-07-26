@@ -22,14 +22,16 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
 
-logging.basicConfig(
-    filename=f"{log_dir}/app.log",
-    filemode="w",
-    format="%(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO
-)
+
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
+
+
+def stringify_cookie(cookie: dict):
+    out_cookie = ""
+    for k, v in cookie.items():
+        out_cookie += f"{k}={v};"
+    return out_cookie
 
 
 def log_action():
@@ -37,7 +39,7 @@ def log_action():
         f"\"{request.method} "
         f"{request.url}\" "
         f"{request.headers.get('User-Agent')} "
-        f"{request.cookies}",
+        f"{stringify_cookie(request.cookies)}",
         extra={"hostip": request.host}
     )
 
