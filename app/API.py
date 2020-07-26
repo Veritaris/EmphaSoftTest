@@ -4,12 +4,13 @@ import requests
 import logging
 import os
 
-log_folder = os.path.join(os.path.realpath(os.pardir), "logs")
+parent_dir = "/".join(os.path.realpath(__file__).split("/")[:-1])
+log_dir = os.path.join(parent_dir, "logs")
 
-if not os.path.exists(log_folder):
-    os.makedirs(log_folder)
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
 
-logging.basicConfig(filename=f"{log_folder}/app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(filename=f"{log_dir}/app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s")
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
