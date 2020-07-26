@@ -1,4 +1,3 @@
-cd ~/$1
 git pull --force
 
 if ! cmp requirements.txt requirements.super.txt >/dev/null 2>&1
@@ -10,7 +9,7 @@ then
   echo -e "\e[93mInstalling packages..."
   if pip install -r requirements.txt
   then
-    echo "\e[92Done."
+    echo "\e[92mDone."
   fi
 fi
 
