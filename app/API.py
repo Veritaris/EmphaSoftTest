@@ -12,7 +12,7 @@ log_dir = os.path.join(parent_dir, "logs")
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-handler = RotatingFileHandler(log_dir, maxBytes=1000000, backupCount=1)
+handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=1)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
     '%(levelname)-8s %(asctime)s: %(message)s'
