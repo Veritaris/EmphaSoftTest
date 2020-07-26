@@ -20,5 +20,5 @@ def is_logged():
 
 
 @app.route("/est/access")
-def login_to_vk():
+def get_access():
     return API.get_access()

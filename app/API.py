@@ -1,7 +1,15 @@
 from flask import render_template, request, jsonify
 from app import app
 import requests
+import logging
+import os
 
+log_folder = os.path.join(os.path.realpath(os.pardir), "logs")
+
+if not os.path.exists(log_folder):
+    os.makedirs(log_folder)
+
+logging.basicConfig(filename=f"{log_folder}/app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s")
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
@@ -22,8 +30,8 @@ def login_to_vk():
             "v": 5.120
         }
     )
-    print(r.content)
-    print(r.cookies)
+    logging.info(str(r.content))
+    logging.info(str(r.cookies))
     return "ok"
 
 
@@ -33,4 +41,5 @@ def is_logged():
 
 def get_access():
     r = request
-    return r.path
+    logging.info(r.path)
+    return "r.path"
