@@ -5,6 +5,7 @@ from requests import post
 from app import app
 import logging
 import os
+
 parent_dir = "/".join(os.path.realpath(__file__).split("/")[:-1])
 log_dir = os.path.join(parent_dir, "logs")
 
@@ -67,11 +68,11 @@ def login_to_vk():
 
 def get_code():
     req = url_decode(request.url)
+
+    # if "code" not in req.keys():
+    #     return jsonify({"error": req.get("error"), "error_description": req.get("error_description")}), 400
+
     code = req.get("code")
-
-    if not code:
-        return jsonify({"error": req.get("error"), "error_description":req.get("error_description")}), 400
-
     r = post(
         url=token_url,
         data={
