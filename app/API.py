@@ -15,7 +15,7 @@ if not os.path.exists(log_dir):
 handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
-    '[%(asctime)s] -- %(message)s'
+    '%(hostip)s [%(asctime)s] -- %(message)s'
 ))
 
 logger = logging.getLogger()
@@ -32,8 +32,18 @@ oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
 
+def log_action():
+    logger.info(
+        f"\"{request.method} "
+        f"{request.url}\" "
+        f"{request.headers.get('User-Agent')} "
+        f"{request.cookies}",
+        extra={"hostip": request.host}
+    )
+
+
 def main_page():
-    logger.info(f"\"{request.method} {request.url}\" {request.headers.get('User-Agent')} {request.cookies}")
+    log_action()
     return render_template("index.html")
 
 
@@ -49,16 +59,16 @@ def login_to_vk():
             "v": 5.120
         }
     )
-    logger.info(f"\"{request.method} {request.url}\" {request.headers.get('User-Agent')} {request.cookies}")
+    log_action()
     return r.content
 
 
 def is_logged():
-    logger.info(f"\"{request.method} {request.url}\" {request.headers.get('User-Agent')} {request.cookies}")
+    log_action()
     return "ok"
 
 
 def get_access():
     r = request
-    logger.info(f"\"{request.method} {request.url}\" {request.headers.get('User-Agent')} {request.cookies}")
+    log_action()
     return "r.path"
