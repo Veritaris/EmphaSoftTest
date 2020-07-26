@@ -1,3 +1,5 @@
+from logging.handlers import RotatingFileHandler
+
 from flask import render_template, request, jsonify
 from app import app
 import requests
@@ -10,17 +12,28 @@ log_dir = os.path.join(parent_dir, "logs")
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-logging.basicConfig(
-    filename=f"{log_dir}/app.log",
-    filemode="w",
-    format="%(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO
-)
+handler = RotatingFileHandler(log_dir, maxBytes=1000000, backupCount=1)
+handler.setLevel(logging.INFO)
+handler.setFormatter(logging.Formatter(
+    '%(levelname)-8s %(asctime)s: %(message)s'
+))
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+logger.addHandler(handler)
+
+# logging.basicConfig(
+#     filename=f"{log_dir}/app.log",
+#     filemode="w",
+#     format="%(name)s - %(levelname)s - %(message)s",
+#     level=logging.INFO
+# )
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
 
 def main_page():
+    logger.info("test")
     return render_template("index.html")
 
 
@@ -36,8 +49,8 @@ def login_to_vk():
             "v": 5.120
         }
     )
-    logging.info(str(r.content))
-    logging.info(str(r.cookies))
+    logger.info(str(r.content))
+    logger.info(str(r.cookies))
     return "ok"
 
 
@@ -47,5 +60,5 @@ def is_logged():
 
 def get_access():
     r = request
-    logging.info(r.path)
+    logger.info(r.path)
     return "r.path"
