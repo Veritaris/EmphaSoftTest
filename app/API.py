@@ -10,7 +10,12 @@ log_dir = os.path.join(parent_dir, "logs")
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-logging.basicConfig(filename=f"{log_dir}/app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    filename=f"{log_dir}/app.log",
+    filemode="w",
+    format="%(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
 oauth_url = "https://oauth.vk.com/authorize"
 vk_api_url = "https://api.vk.com/method/"
 
