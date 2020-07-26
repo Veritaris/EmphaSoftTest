@@ -8,29 +8,12 @@
     <body>
         <div class="contentHolder">
             <div class="selectHolder">
-
-                <form action="/login" method="post" id="login_form" enctype="multipart/form-data">
-{#                    <div class="selectors">#}
-                        <div class="login">
-{#                            <label for="choose_image_button">#}
-{#                                <div>#}
-{#                                    Select file to upload#}
-{#                                </div>#}
-{#                            </label>#}
-{#                            <div class="selectFileWrapper">#}
-{#                                <button class="btn">Upload a file</button>#}
-{#                                <input name="file" type="file" id="file"/>#}
-{#                            </div>#}
-{#                            <label for="user_login"></label><input type="text" value="email or phone" id="user_login"><br>#}
-{#                            <label for="user_password"></label><input type="text" value="password" id="user_password"><br>#}
-                            <label for="login_button"></label><input type="submit" value="Login" id="login_button">
-                            <label for="keep_login"></label><input type="checkbox" value="Remember me" id="keep_login"> Remember me
-
-                        </div>
-{#                    </div>#}
-
+                <form action="/est/login" method="post" id="login_form" enctype="multipart/form-data">
+                    <div class="login">
+                        <label for="login_button"></label><input type="submit" value="Login" id="login_button">
+                        <label for="keep_login"></label><input type="checkbox" value="Remember me" id="keep_login"> Remember me
+                    </div>
                 </form>
-
             </div>
         </div>
     </body>

@@ -17,3 +17,8 @@ def login_to_vk():
 @app.route("/est/login", methods=["GET"])
 def is_logged():
     return API.is_logged()
+
+
+@app.route("/est/access", methods=["POST"])
+def login_to_vk():
+    return API.get_access()

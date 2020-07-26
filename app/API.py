@@ -16,9 +16,9 @@ def login_to_vk():
         data={
             "client_id": app.config.get("CLIENT_ID"),
             "display": "page",
-            # "redirect_uri": "167.71.58.132",
+            "redirect_uri": "https://167.71.58.132/est/access",
             "scope": 2,
-            "response_type": "token",
+            "response_type": "code",
             "v": 5.120
         }
     )
@@ -29,3 +29,8 @@ def login_to_vk():
 
 def is_logged():
     return "ok"
+
+
+def get_access():
+    r = request
+    return r.path
