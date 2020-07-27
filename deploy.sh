@@ -13,5 +13,5 @@ then
   fi
 fi
 
-sudo service unit reload
-sudo service nginx reload
+sudo service unit restart
+sudo service nginx restart
