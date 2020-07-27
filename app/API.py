@@ -88,6 +88,7 @@ def login_to_vk():
                 "v": 5.120
             }
         )
+        return r.content
     return redirect("/est")
 
 
@@ -134,3 +135,12 @@ def show_friend():
         return redirect("/est")
 
     return render_template("home.html", user="testuser", friends=fake_friend), 200
+
+
+def logout():
+    if not session.get("user"):
+        dbsession.delete(dbsession.quert(Users).get(session.get("user")))
+        dbsession.commit()
+        session.pop("user", None)
+        return redirect("/est")
+    return redirect("/est")

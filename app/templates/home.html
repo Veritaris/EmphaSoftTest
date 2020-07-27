@@ -10,5 +10,11 @@
     {% for name, surname, link in friends %}
         <p>Name: {{ name }}, surname: {{ surname }}, profile link: {{ link }}</p>
     {% endfor %}
+    <hr>
+    <form action="/est/logout" method="post" id="logout_form" enctype="multipart/form-data">
+        <div class="login">
+            <label for="logout_button"></label><input type="submit" value="Logout" id="logout_button">
+        </div>
+    </form>
 </body>
 </html>
