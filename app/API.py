@@ -89,7 +89,7 @@ def login_to_vk():
             }
         )
         return r.content
-    return "ok", 200
+    return "oklogin", 200
     # return redirect("/est")
 
 
@@ -116,7 +116,7 @@ def get_code():
             dbsession.commit()
         return r.content
     else:
-        return "ok", 200
+        return "okgetcode", 200
 
 
 @log
