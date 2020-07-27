@@ -1,7 +1,7 @@
 from flask import render_template, request, jsonify, session, redirect
 from database.DatabaseModels import database, Users
 from logging.handlers import RotatingFileHandler
-from werkzeug.urls import url_decode
+from werkzeug.urls import url_decode, url_parse
 from requests import post
 from uuid import uuid4
 from app import app
@@ -94,7 +94,7 @@ def login_to_vk():
 
 @log
 def get_code():
-    req = url_decode(request.url)
+    req = url_decode(url_parse(request.url).query)
     print(req)
     if "code" in req.keys():
         code = req.get("code")
@@ -115,7 +115,7 @@ def get_code():
             dbsession.commit()
         return r.content
     else:
-        return request.url, 200
+        return jsonify(req), 200
 
 
 @log
