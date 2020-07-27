@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1> Hello, {{ user }} </h1>
+    <h2> 5 your random friend are: </h2>
+    {% for name, surname, link in friends %}
+        <p>Name: {{ name }}, surname: {{ surname }}, profile link: {{ link }}</p>
+    {% endfor %}
+</body>
+</html>
