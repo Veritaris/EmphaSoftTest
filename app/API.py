@@ -6,8 +6,6 @@ from requests import post
 from uuid import uuid4
 from app import app
 import logging
-from faker import Faker
-from faker.providers import internet
 import os
 
 dbsession = database.session
@@ -17,31 +15,30 @@ log_dir = os.path.join(parent_dir, "logs")
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-fake = Faker()
-fake.add_provider(internet)
+# handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
+# handler.setLevel(logging.INFO)
+# handler.setFormatter(logging.Formatter(
+#     '%(asssss)s [%(asctime)s] -- %(message)s'
+# ))
+# # handler.setFormatter(logging.Formatter(
+# #     '[%(asctime)s] -- %(message)s'
+# # ))
+# # logger = logging.getLogger()
+# # logger.setLevel(logging.DEBUG)
+# # logger.addHandler(handler)
 
-fake_friend = []
-for i in range(5):
-    fake_friend.append(
-        (fake.first_name(), fake.last_name(), fake.url())
-    )
+token_url = "https://oauth.vk.com/access_token"
+oauth_url = "https://oauth.vk.com/authorize"
+vk_api_url = "https://api.vk.com/method/{}"
 
 handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
     '%(hostip)s [%(asctime)s] -- %(message)s'
 ))
-# handler.setFormatter(logging.Formatter(
-#     '[%(asctime)s] -- %(message)s'
-# ))
-
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
-
-token_url = "https://oauth.vk.com/access_token"
-oauth_url = "https://oauth.vk.com/authorize"
-vk_api_url = "https://api.vk.com/method/{}"
 
 
 def stringify_cookie(cookie: dict):
@@ -57,11 +54,10 @@ def log(func):
             f"\"{request.method} "
             f"{request.url}\" "
             f"{request.headers.get('User-Agent')} "
-            f"{stringify_cookie(request.cookies)}",
-            extra={"hostip": request.url}
+            f"{request.cookies}",
+            extra={"hostip": request.host}
         )
         return func()
-
     return wrap
 
 
@@ -70,8 +66,9 @@ def main_page():
     return render_template("login.html")
 
 
-@log
+# @log
 def login_to_vk():
+
     session.permanent = True if request.form.get("keep_login") else False
     if not session.get("user"):
         user_session_uuid = str(uuid4().hex)
@@ -93,7 +90,7 @@ def login_to_vk():
     return redirect("/est")
 
 
-@log
+# @log
 def get_code():
     req = url_decode(url_parse(request.url).query)
     print(req)
@@ -120,7 +117,7 @@ def get_code():
         return jsonify(req), 200
 
 
-@log
+# @log
 def show_friend():
     if not dbsession.query(Users).get(session.get("user")):
         session.pop("user", None)
