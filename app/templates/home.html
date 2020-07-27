@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1> Hello, {{ user }} </h1>
-    <h2> 5 your random friend are: </h2>
+    <h2> 5 of your friend are: </h2>
     {% for name, surname, link in friends %}
         <p>First name: {{ name }}, second name: {{ surname }}, profile link: <a href="https://vk.com/id{{ link }}">https://vk.com/id{{ link }}</a></p>
     {% endfor %}
