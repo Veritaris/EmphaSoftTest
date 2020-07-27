@@ -95,7 +95,6 @@ def login_to_vk():
 @log
 def get_code():
     req = url_decode(request.url)
-    return request.url
     print(req)
     if "code" in req.keys():
         code = req.get("code")
@@ -116,7 +115,7 @@ def get_code():
             dbsession.commit()
         return r.content
     else:
-        return "okgetcode", 200
+        return request.url, 200
 
 
 @log
