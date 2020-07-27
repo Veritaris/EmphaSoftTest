@@ -11,6 +11,7 @@ def dump_datetime(value):
 class Users(database.Model):
     __tablename__ = "Users"
     user_uuid = database.Column(database.String(64), primary_key=True)
+    user_code = database.Column(database.String(64), unique=True)
     user_token = database.Column(database.String(64), unique=True)
 
     def __repr__(self):

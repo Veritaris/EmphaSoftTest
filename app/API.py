@@ -89,13 +89,13 @@ def login_to_vk():
             }
         )
         return r.content
-    return "oklogin", 200
-    # return redirect("/est")
+    return redirect("/est")
 
 
 @log
 def get_code():
     req = url_decode(request.url)
+    return request.url
     print(req)
     if "code" in req.keys():
         code = req.get("code")
@@ -134,7 +134,8 @@ def show_friend():
     if not dbsession.query(Users).get(session.get("user")):
         session.pop("user", None)
         return redirect("/est")
-    return render_template("home.html", user="testuser", friends=fake_friend), 200
+    # return render_template("home.html", user="testuser", friends=fake_friend), 200
+    return request.url
 
 
 def logout():
