@@ -62,18 +62,15 @@ def login_to_vk():
         dbsession.add(Users(user_uuid=user_session_uuid, user_token=str(uuid4().hex)))
         dbsession.commit()
         session["user"] = user_session_uuid
-        r = post(
-            url=oauth_url,
-            data={
-                "client_id": app.config.get("CLIENT_ID"),
-                "display": "page",
-                "redirect_uri": "https://167.71.58.132/est/getCode",
-                "scope": 2,
-                "response_type": "code",
-                "v": "5.120"
-            }
+
+        return redirect(
+            oauth_url + f"?client_id={app.config.get('CLIENT_ID')}&"
+                        f"display=page&"
+                        f"redirect_uri=https://167.71.58.132/est/getCode&"
+                        f"scope=2&"
+                        f"response_type=code&"
+                        f"v=120"
         )
-        return r.content
     return redirect("/est")
 
 
