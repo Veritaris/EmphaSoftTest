@@ -1,15 +1,17 @@
-from flask import request
-from app import app
+from flask import session
 from app import API
+from app import app
 
 
 @app.route("/est", methods=["GET"])
 def render_main():
-    # if request.cookies.get("user_logged")
-    return API.main_page()
+    if not session.get("user"):
+        return API.main_page()
+    else:
+        return API.show_friend()
 
 
-@app.route("/est/login", methods=["POST"])
+@app.route("/est/login", methods=["POST", "GET"])
 def login_to_vk():
     return API.login_to_vk()
 
