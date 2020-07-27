@@ -141,6 +141,7 @@ def logout():
     if not session.get("user"):
         dbsession.delete(dbsession.quert(Users).get(session.get("user")))
         dbsession.commit()
-        session.clear()
+        session.pop("user", None)
+        session.modified = True
         return redirect("/est")
     return redirect("/est")
