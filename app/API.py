@@ -29,13 +29,6 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(handler)
 
 
-def stringify_cookie(cookie: dict):
-    out_cookie = ""
-    for k, v in cookie.items():
-        out_cookie += f"{k}={v};"
-    return out_cookie
-
-
 def log(func):
     def wrap():
         logger.info(
@@ -55,14 +48,12 @@ def main_page():
 
 @log
 def login_to_vk():
-
     session.permanent = True if request.form.get("keep_login") else False
     if not session.get("user"):
         user_session_uuid = str(uuid4().hex)
         dbsession.add(Users(user_uuid=user_session_uuid, user_token=str(uuid4().hex)))
         dbsession.commit()
         session["user"] = user_session_uuid
-
         return redirect(
             oauth_url + f"?client_id={app.config.get('CLIENT_ID')}&"
                         f"display=page&"
