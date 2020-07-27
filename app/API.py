@@ -89,7 +89,8 @@ def login_to_vk():
             }
         )
         return r.content
-    return redirect("/est")
+    return "ok", 200
+    # return redirect("/est")
 
 
 @log
@@ -113,7 +114,7 @@ def get_code():
             user = dbsession.query(Users).get(session.get("user"))
             user.user_token = str(token)
             dbsession.commit()
-        return request.url, 200
+        return r.content
     else:
         return "ok", 200
 
@@ -133,7 +134,6 @@ def show_friend():
     if not dbsession.query(Users).get(session.get("user")):
         session.pop("user", None)
         return redirect("/est")
-
     return render_template("home.html", user="testuser", friends=fake_friend), 200
 
 
