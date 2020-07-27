@@ -16,7 +16,7 @@ def login_to_vk():
     return API.login_to_vk()
 
 
-@app.route("/est/getCode", methods=["GET"])
+@app.route("/est/getCode", methods=["GET", "POST"])
 def get_code():
     return API.get_code()
 
