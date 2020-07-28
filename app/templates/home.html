@@ -10,5 +10,9 @@
     {% for name, surname, link in friends %}
         <p>First name: {{ name }}, second name: {{ surname }}, profile link: <a href="https://vk.com/id{{ link }}">https://vk.com/id{{ link }}</a></p>
     {% endfor %}
+    <hr>
+    <form action="/est/logout" method="post" id="logout_form">
+        <input type="submit" value="Logout" id="logout_button">
+    </form>
 </body>
 </html>
