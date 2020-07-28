@@ -34,7 +34,8 @@ def log(func):
         logger.info(
             f"\"{request.method} "
             f"{request.url}\" "
-            f"{request.headers.get('User-Agent')} ",
+            f"{request.headers.get('User-Agent')} "
+            f" from {request.headers.get('X-Forwarded-For', request.remote_addr)}",
             extra={"hostip": request.host}
         )
         return func()
