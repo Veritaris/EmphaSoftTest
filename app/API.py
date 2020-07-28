@@ -132,7 +132,7 @@ def show_friend():
 
 def logout():
     if session.get("user"):
-        dbsession.delete(dbsession.quert(Users).get(session.get("user")))
+        dbsession.delete(dbsession.query(Users).get(session.get("user")))
         dbsession.commit()
         session.pop("user", None)
         return redirect("/est")
