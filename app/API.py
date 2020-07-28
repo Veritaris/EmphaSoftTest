@@ -22,7 +22,7 @@ vk_api_url = "https://api.vk.com/method/{}"
 handler = RotatingFileHandler(f"{log_dir}/app.log", maxBytes=1000000, backupCount=8)
 handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter(
-    '%(hostip)s [%(asctime)s] -- %(message)s'
+    '%(userip)s -> %(hostip)s [%(asctime)s] -- %(message)s'
 ))
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -34,9 +34,8 @@ def log(func):
         logger.info(
             f"\"{request.method} "
             f"{request.url}\" "
-            f"{request.headers.get('User-Agent')} "
-            f" from {request.headers.get('X-Forwarded-For', request.remote_addr)}",
-            extra={"hostip": request.host}
+            f"{request.headers.get('User-Agent')} ",
+            extra={"hostip": request.host, "userip": request.headers.get('X-Forwarded-For', request.remote_addr)}
         )
         return func()
     return wrap
