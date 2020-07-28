@@ -94,7 +94,7 @@ def get_code():
 def show_friend():
     if not dbsession.query(Users).get(session.get("user")):
         session.pop("user", None)
-        return redirect("/est")
+        return "You was logged out, please login again."
     user_token = dbsession.query(Users).get(session.get("user")).user_token
     me = post(
         url=vk_api_url.format("users.get"),
