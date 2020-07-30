@@ -1,0 +1,21 @@
+.mfooter {
+    display:flex;
+    position: absolute;
+    alignment: bottom;
+    height: 50px;
+    width: 100%;
+    bottom: 0;
+    /*background-color: #333333;*/
+    /*justify-content:center;*/
+    /*align-items:center;*/
+}
+
+p.copyright {
+    position: absolute;
+    width: 100%;
+    color: #000000;
+    line-height: 40px;
+    font-size: 0.7em;
+    text-align: center;
+    bottom:0;
+}
