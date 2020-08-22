@@ -57,7 +57,7 @@ def login_to_vk():
         return redirect(
             oauth_url + f"?client_id={app.config.get('CLIENT_ID')}&"
                         f"display=page&"
-                        f"redirect_uri=https://167.71.58.132/est/getCode&"
+                        f"redirect_uri=https://veritaris.me/est/getCode&"
                         f"scope=2&"
                         f"response_type=code&"
                         f"v=120"
@@ -75,7 +75,7 @@ def get_code():
             data={
                 "client_id": app.config["CLIENT_ID"],
                 "client_secret": app.config["APP_SECRET_KEY"],
-                "redirect_uri": "https://167.71.58.132/est/getCode",
+                "redirect_uri": "https://veritaris.me/est/getCode",
                 "code": code
             }
         )
