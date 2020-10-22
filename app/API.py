@@ -57,12 +57,12 @@ def login_to_vk():
         return redirect(
             oauth_url + f"?client_id={app.config.get('CLIENT_ID')}&"
                         f"display=page&"
-                        f"redirect_uri=https://veritaris.me/est/getCode&"
+                        f"redirect_uri=https://est.veritaris.me/getCode&"
                         f"scope=2&"
                         f"response_type=code&"
                         f"v=120"
         )
-    return redirect("/est")
+    return redirect("/")
 
 
 @log
@@ -75,7 +75,7 @@ def get_code():
             data={
                 "client_id": app.config["CLIENT_ID"],
                 "client_secret": app.config["APP_SECRET_KEY"],
-                "redirect_uri": "https://veritaris.me/est/getCode",
+                "redirect_uri": "https://est.veritaris.me/getCode",
                 "code": code
             }
         )
@@ -85,7 +85,7 @@ def get_code():
             user.user_code = str(code)
             user.user_token = str(token)
             dbsession.commit()
-        return redirect("/est")
+        return redirect("/")
     else:
         return jsonify(req), 200
 
@@ -126,7 +126,6 @@ def show_friend():
         friends.append(
             (user.get("first_name"), user.get("last_name"), user.get("id"))
         )
-
     return render_template("home.html", user=username, friends=friends), 200
 
 
@@ -135,5 +134,4 @@ def logout():
         dbsession.delete(dbsession.query(Users).get(session.get("user")))
         dbsession.commit()
         session.pop("user", None)
-        return redirect("/est")
-    return redirect("/est")
+    return redirect("/")
