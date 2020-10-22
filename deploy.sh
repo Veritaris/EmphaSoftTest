@@ -1,4 +1,4 @@
-git pull --force
+GIT_SSH_COMMAND='ssh -i ~/.ssh/git.pub' git pull --force
 
 if ! cmp requirements.txt requirements.super.txt >/dev/null 2>&1
 then
